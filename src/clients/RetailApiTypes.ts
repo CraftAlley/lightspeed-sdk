@@ -16,7 +16,8 @@ export type CustomerParams =
   | 'creditAccountID'
   | 'customerTypeID'
   | 'discountID'
-  | 'taxCategoryID';
+  | 'taxCategoryID'
+  | 'Contact.email';
 
 export type CustomerSearchParams = {
   [k in CustomerParams]?: SearchParam | string;
