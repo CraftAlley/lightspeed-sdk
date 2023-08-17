@@ -192,7 +192,6 @@ class LightspeedRetailApi {
   }
 
   async postCustomer(
-    accountId: number | string,
     customer: PostCustomer
   ): Promise<Customer | never> {
     const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/Customer.json`;
@@ -647,7 +646,6 @@ class LightspeedRetailApi {
   }
 
   async getItemById(
-    accountId,
     itemId,
     loadRelations = [
       'ItemShops',
@@ -685,7 +683,6 @@ class LightspeedRetailApi {
   }
 
   getItems(
-    accountId,
     itemSearchParams: ItemSearchParams = {}
     ) {
     const url = `https://api.merchantos.com/API/${this.version}/Account/${this.accountId}/Item.json`;
@@ -701,7 +698,6 @@ class LightspeedRetailApi {
   }
 
   getCustomers(
-    accountId,
     customersSearchParams: CustomerSearchParams = {}
   ): RetailApiCursor<Customer> {
     const url = `https://api.merchantos.com/API/${this.version}/Account/${this.accountId}/Customer.json`;
