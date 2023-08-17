@@ -2,6 +2,19 @@ export type SearchOperator = '=' | '>' | '>=' | '<' | '<=' | '><' | '!=' | '~' |
 
 export type SearchParam = [SearchOperator, string];
 
+export type ItemParams =
+  | 'upc'
+  | 'itemID'
+  | 'systemSku'
+  | 'timeStamp'
+  | 'categoryID'
+  | 'customSku'
+  | 'ItemShops.timeStamp';
+
+export type ItemSearchParams = {
+  [k in ItemParams]?: SearchParam | string;
+};
+
 export type CustomerParams =
   | 'firstName'
   | 'lastName'

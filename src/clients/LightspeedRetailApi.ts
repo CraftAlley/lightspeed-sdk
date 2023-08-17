@@ -677,10 +677,15 @@ class LightspeedRetailApi {
     return new RetailApiCursor(url, 'Manufacturer', this);
   }
 
-  getItems(accountId) {
-    const url = `https://api.merchantos.com/API/Account/${accountId}/Item.json`;
+  getItems(
+    accountId
+    itemSearchParams: ItemSearchParams = {}
+    ) {
+    let url = `https://api.merchantos.com/API/Account/${accountId}/Item.json`;
+
     return new RetailApiCursor(url, 'Item', this, {
       load_relations: '["ItemShops", "Images", "Manufacturer"]',
+      ...searchParamsToQueryParams(itemSearchParams),
     });
   }
 
