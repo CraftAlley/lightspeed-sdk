@@ -1,10 +1,12 @@
 {
   "name": "@craftalley/lightspeed-sdk",
-  "version": "0.1.0-beta.14",
+  "version": "0.1.0-beta.15",
   "description": "Unofficial Lightspeed SDK for Node.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["/dist"],
+  "files": [
+    "/dist"
+  ],
   "scripts": {
     "test": "jest --env=node",
     "build": "npx tsc",
@@ -30,10 +32,11 @@
   },
   "devDependencies": {
     "@types/jest": "^27.5.0",
+    "@types/node": "^20.5.0",
     "jest": "^28.0.0",
     "nock": "^13.0.5",
     "prettier": "2.1.2",
     "ts-jest": "^28.0.1",
-    "typescript": "^4.6.4"
+    "typescript": "^4.9.5"
   }
 }

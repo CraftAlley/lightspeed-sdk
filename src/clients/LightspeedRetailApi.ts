@@ -4,6 +4,7 @@ import {
   Customer,
   CustomerSearchParams,
   Item,
+  ItemSearchParams,
   PaymentType,
   PostCustomer,
   PostSale,
@@ -678,7 +679,7 @@ class LightspeedRetailApi {
   }
 
   getItems(
-    accountId
+    accountId,
     itemSearchParams: ItemSearchParams = {}
     ) {
     let url = `https://api.merchantos.com/API/Account/${accountId}/Item.json`;
