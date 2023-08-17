@@ -22,6 +22,25 @@ class RetailApiCursor<T = any> {
     return elements;
   }
 
+  buildUrl(offset, limit) {
+    let params = "";
+    if (this.baseUrl.includes('/V2/')) {
+      params = querystring.stringify({
+        ...this.queryString,
+        offset,
+        limit,
+      });
+    } else {
+      params = querystring.stringify({
+        ...this.queryString,
+        limit,
+      });
+    }
+
+    return this.baseUrl.includes('?') ? `${this.baseUrl}&${params}` : `${this.baseUrl}?${params}`;
+
+  }
+
   async *[Symbol.asyncIterator](): AsyncGenerator<T, string, boolean> {
     let offset = 0;
     const limit = 100;
@@ -29,22 +48,9 @@ class RetailApiCursor<T = any> {
     const resource = this.resource;
     const lsInstance = this.instance;
 
-    while (keepFetching) {
-      let url = '';
-      if (this.baseUrl.includes('?')) {
-        url = `${this.baseUrl}&${querystring.stringify({
-          ...this.queryString,
-          offset,
-          limit,
-        })}`;
-      } else {
-        url = `${this.baseUrl}?${querystring.stringify({
-          ...this.queryString,
-          offset,
-          limit,
-        })}`;
-      }
+    let url = this.buildUrl(offset, limit);
 
+    while (keepFetching) {
       try {
         const options = {
           method: 'GET',
@@ -70,10 +76,20 @@ class RetailApiCursor<T = any> {
           yield element;
         }
 
-        if (offset + limit > apiResponse.data['@attributes'].count) {
-          keepFetching = false;
+        if (apiResponse.data['@attributes'].hasOwnProperty('next')) {
+          if (apiResponse.data['@attributes'].next != "") {
+            url = apiResponse.data['@attributes'].next;
+          } else {
+            keepFetching = false;
+          }
         } else {
-          offset = offset + limit;
+          // Depricated
+          if (offset + limit > apiResponse.data['@attributes'].count) {
+            keepFetching = false;
+          } else {
+            offset = offset + limit;
+            url = this.buildUrl(offset, limit);
+          }
         }
       } catch (err) {
         console.log(err);

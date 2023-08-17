@@ -24,6 +24,8 @@ type ConstructorOptions = {
   clientId: string;
   clientSecret: string;
   refreshToken: string;
+  version: string;
+  accountId: string;
 };
 
 interface SearchParams {
@@ -78,14 +80,18 @@ class LightspeedRetailApi {
   private readonly clientId: string;
   private readonly clientSecret: string;
   private refreshToken: string;
+  private version: string;
+  private accountId: string;
 
   constructor(opts: ConstructorOptions) {
-    const { clientId, clientSecret, refreshToken } = opts;
+    const { clientId, clientSecret, refreshToken, version, accountId } = opts;
 
     this.lastResponse = null;
     this.clientId = clientId;
     this.clientSecret = clientSecret;
     this.refreshToken = refreshToken;
+    this.version = version;
+    this.accountId = accountId;
   }
 
   private handleResponseError(msg, err): never {
@@ -168,8 +174,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async postItem(accountId, item) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/Item.json`;
+  async postItem(item) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/Item.json`;
 
     const options = {
       method: 'POST',
@@ -189,7 +195,7 @@ class LightspeedRetailApi {
     accountId: number | string,
     customer: PostCustomer
   ): Promise<Customer | never> {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/Customer.json`;
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/Customer.json`;
 
     const options = {
       method: 'POST',
@@ -205,8 +211,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async postCustomerType(accountId, customerType) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/CustomerType.json`;
+  async postCustomerType(customerType) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/CustomerType.json`;
 
     const options = {
       method: 'POST',
@@ -222,8 +228,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async postItemAttributeSet(accountId, attributeSet) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/ItemAttributeSet.json`;
+  async postItemAttributeSet(attributeSet) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/ItemAttributeSet.json`;
 
     const options = {
       method: 'POST',
@@ -239,8 +245,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async postItemMatrix(accountId, itemMatrix) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/ItemMatrix.json`;
+  async postItemMatrix(itemMatrix) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/ItemMatrix.json`;
 
     const options = {
       method: 'POST',
@@ -256,8 +262,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async postItemCustomField(accountId, customField) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/Item/CustomField.json`;
+  async postItemCustomField(customField) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/Item/CustomField.json`;
 
     const options = {
       method: 'POST',
@@ -273,8 +279,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async postPaymentMethod(accountId, paymentMethod) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/PaymentType.json`;
+  async postPaymentMethod(paymentMethod) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/PaymentType.json`;
 
     const options = {
       method: 'POST',
@@ -290,8 +296,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async postCustomerCustomField(accountId, customField) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/Customer/CustomField.json`;
+  async postCustomerCustomField(customField) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/Customer/CustomField.json`;
 
     const options = {
       method: 'POST',
@@ -307,8 +313,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async postSale(accountId, sale: PostSale): Promise<Sale> {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/Sale.json`;
+  async postSale(sale: PostSale): Promise<Sale> {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/Sale.json`;
 
     const options = {
       method: 'POST',
@@ -324,8 +330,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async putItem(accountId, item, ID) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/Item/${ID}.json`;
+  async putItem(item, ID) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/Item/${ID}.json`;
 
     const options = {
       method: 'PUT',
@@ -341,8 +347,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async putItemMatrix(accountId, matrix, ID) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/ItemMatrix/${ID}.json`;
+  async putItemMatrix(matrix, ID) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/ItemMatrix/${ID}.json`;
 
     const options = {
       method: 'PUT',
@@ -358,8 +364,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async putCustomer(accountId, customer, ID) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/Customer/${ID}.json`;
+  async putCustomer(customer, ID) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/Customer/${ID}.json`;
 
     const options = {
       method: 'PUT',
@@ -376,7 +382,7 @@ class LightspeedRetailApi {
   }
 
   async getAccount() {
-    const url = 'https://api.merchantos.com/API/Account.json';
+    const url = 'https://api.merchantos.com/API/${this.version}/Account.json';
 
     const options = {
       method: 'GET',
@@ -391,20 +397,20 @@ class LightspeedRetailApi {
     }
   }
 
-  async getTaxCategory(accountId, taxCategoryId): Promise<TaxCategory> {
-    const url = `https://api.merchantos.com/API/V3/Account/${accountId}/TaxCategory/${taxCategoryId}.json`;
+  async getTaxCategory(taxCategoryId): Promise<TaxCategory> {
+    const url = `https://api.merchantos.com/API/${this.version}/Account/${this.accountId}/TaxCategory/${taxCategoryId}.json`;
 
     return (await this.performRequest({ method: 'GET', url })).data.TaxCategory as TaxCategory;
   }
 
-  getCompletedSalesByPeriod(accountId, start, end) {
+  getCompletedSalesByPeriod(start, end) {
     let url = null;
     if (end == undefined) {
-      url = `https://api.merchantos.com/API/Account/${accountId}/Sale.json?completed==true&completeTime=${encodeURIComponent(
+      url = `https://api.merchantos.com/API/${this.version}/Account/${this.accountId}/Sale.json?completed==true&completeTime=${encodeURIComponent(
         `>,${start}`
       )}`;
     } else {
-      url = `https://api.merchantos.com/API/Account/${accountId}/Sale.json?completed==true&completeTime=${encodeURIComponent(
+      url = `https://api.merchantos.com/API/${this.version}/Account/${this.accountId}/Sale.json?completed==true&completeTime=${encodeURIComponent(
         `><,${start},${end}`
       )}`;
     }
@@ -415,15 +421,15 @@ class LightspeedRetailApi {
     });
   }
 
-  getSales(accountId) {
-    const url = `https://api.merchantos.com/API/Account/${accountId}/Sale.json`;
+  getSales() {
+    const url = `https://api.merchantos.com/API/${this.version}/Account/${this.accountId}/Sale.json`;
     return new RetailApiCursor(url, 'Sale', this, {
       load_relations:
         '["TaxCategory","SaleLines","SaleLines.Item","SalePayments","SalePayments.PaymentType","Customer","Discount","Customer.Contact"]',
     });
   }
 
-  public async getSale(accountId, saleId) {
+  public async getSale(saleId) {
     const queryString = {
       load_relations: JSON.stringify([
         'TaxCategory',
@@ -432,7 +438,7 @@ class LightspeedRetailApi {
         'SalePayments.PaymentType',
       ]),
     };
-    const url = `https://api.merchantos.com/API/Account/${accountId}/Sale/${saleId}.json?${querystring.stringify(
+    const url = `https://api.merchantos.com/API/${this.version}/Account/${this.accountId}/Sale/${saleId}.json?${querystring.stringify(
       queryString
     )}`;
     const options = {
@@ -448,8 +454,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async getSalePaymentByID(accountId, salePaymentID) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/SalePayment/${salePaymentID}.json`;
+  async getSalePaymentByID(salePaymentID) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/SalePayment/${salePaymentID}.json`;
 
     const options = {
       method: 'GET',
@@ -464,8 +470,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async getSalePaymentBySaleID(accountId, saleID) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/SalePayment.json?saleID=${saleID}`;
+  async getSalePaymentBySaleID(saleID) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/SalePayment.json?saleID=${saleID}`;
 
     const options = {
       method: 'GET',
@@ -480,8 +486,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async getSaleLineBySaleID(accountId, saleID) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/SaleLine.json?saleID=${saleID}`;
+  async getSaleLineBySaleID(saleID) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/SaleLine.json?saleID=${saleID}`;
 
     const options = {
       method: 'GET',
@@ -496,8 +502,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async getSaleLineByID(accountId, saleLineID) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/SaleLine/${saleLineID}.json`;
+  async getSaleLineByID(saleLineID) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/SaleLine/${saleLineID}.json`;
 
     const options = {
       method: 'GET',
@@ -512,8 +518,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async getPaymentTypeByID(accountId, paymentTypeID) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/PaymentType/${paymentTypeID}.json`;
+  async getPaymentTypeByID(paymentTypeID) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/PaymentType/${paymentTypeID}.json`;
 
     const options = {
       method: 'GET',
@@ -528,8 +534,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async getShopByID(accountId, shopID) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/Shop/${shopID}.json`;
+  async getShopByID(shopID) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/Shop/${shopID}.json`;
 
     const options = {
       method: 'GET',
@@ -544,8 +550,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async getDiscountByID(accountId, discountID) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/Discount/${discountID}.json`;
+  async getDiscountByID(discountID) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/Discount/${discountID}.json`;
 
     const options = {
       method: 'GET',
@@ -560,8 +566,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async getCustomerByID(accountId, customerID) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/Customer/${customerID}.json?load_relations=["CustomFieldValues", "CustomFieldValues.value"]`;
+  async getCustomerByID(customerID) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/Customer/${customerID}.json?load_relations=["CustomFieldValues", "CustomFieldValues.value"]`;
 
     const options = {
       method: 'GET',
@@ -576,8 +582,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async getContactByID(accountId, contactID) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/Contact/${contactID}.json`;
+  async getContactByID(contactID) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/Contact/${contactID}.json`;
 
     const options = {
       method: 'GET',
@@ -592,8 +598,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async getItemMatrixByID(accountId, itemMatrixID) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/ItemMatrix/${itemMatrixID}.json`;
+  async getItemMatrixByID(itemMatrixID) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/ItemMatrix/${itemMatrixID}.json`;
 
     const options = {
       method: 'GET',
@@ -608,8 +614,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async getItemsByMatrixID(accountId, itemMatrixID) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/Item.json?itemMatrixID=${itemMatrixID}`;
+  async getItemsByMatrixID(itemMatrixID) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/Item.json?itemMatrixID=${itemMatrixID}`;
 
     const options = {
       method: 'GET',
@@ -624,8 +630,8 @@ class LightspeedRetailApi {
     }
   }
 
-  async getItemByCustomSku(accountId, customSku) {
-    const url = `https://api.lightspeedapp.com/API/Account/${accountId}/Item.json?customSku=${customSku}`;
+  async getItemByCustomSku(customSku) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/Item.json?customSku=${customSku}`;
 
     const options = {
       method: 'GET',
@@ -651,7 +657,7 @@ class LightspeedRetailApi {
       'CustomFieldValues.value',
     ]
   ): Promise<Item> {
-    const url = `https://api.merchantos.com/API/Account/${accountId}/Item/${itemId}.json?load_relations=${querystring.escape(
+    const url = `https://api.merchantos.com/API/${this.version}/Account/${this.accountId}/Item/${itemId}.json?load_relations=${querystring.escape(
       JSON.stringify(loadRelations)
     )}`;
 
@@ -668,13 +674,13 @@ class LightspeedRetailApi {
     }
   }
 
-  getCategories(accountId) {
-    const url = `https://api.merchantos.com/API/Account/${accountId}/Category.json`;
+  getCategories() {
+    const url = `https://api.merchantos.com/API/${this.version}/Account/${this.accountId}/Category.json`;
     return new RetailApiCursor(url, 'Category', this);
   }
 
-  getManufacturers(accountId) {
-    const url = `https://api.merchantos.com/API/Account/${accountId}/Manufacturer.json`;
+  getManufacturers() {
+    const url = `https://api.merchantos.com/API/${this.version}/Account/${this.accountId}/Manufacturer.json`;
     return new RetailApiCursor(url, 'Manufacturer', this);
   }
 
@@ -682,16 +688,15 @@ class LightspeedRetailApi {
     accountId,
     itemSearchParams: ItemSearchParams = {}
     ) {
-    let url = `https://api.merchantos.com/API/Account/${accountId}/Item.json`;
-
+    const url = `https://api.merchantos.com/API/${this.version}/Account/${this.accountId}/Item.json`;
     return new RetailApiCursor(url, 'Item', this, {
       load_relations: '["ItemShops", "Images", "Manufacturer"]',
       ...searchParamsToQueryParams(itemSearchParams),
     });
   }
 
-  getPaymentTypes(accountId) {
-    const url = `https://api.merchantos.com/API/Account/${accountId}/PaymentType.json`;
+  getPaymentTypes() {
+    const url = `https://api.merchantos.com/API/${this.version}/Account/${this.accountId}/PaymentType.json`;
     return new RetailApiCursor<PaymentType>(url, 'PaymentType', this, {});
   }
 
@@ -699,15 +704,15 @@ class LightspeedRetailApi {
     accountId,
     customersSearchParams: CustomerSearchParams = {}
   ): RetailApiCursor<Customer> {
-    const url = `https://api.merchantos.com/API/Account/${accountId}/Customer.json`;
+    const url = `https://api.merchantos.com/API/${this.version}/Account/${this.accountId}/Customer.json`;
     return new RetailApiCursor(url, 'Customer', this, {
       load_relations: '["Contact", "CustomFieldValues"]',
       ...searchParamsToQueryParams(customersSearchParams),
     });
   }
 
-  getCustomerTypes(accountId) {
-    const url = `https://api.merchantos.com/API/Account/${accountId}/CustomerType.json`;
+  getCustomerTypes() {
+    const url = `https://api.merchantos.com/API/${this.version}/Account/${this.accountId}/CustomerType.json`;
     return new RetailApiCursor(url, 'CustomerType', this);
   }
 }
