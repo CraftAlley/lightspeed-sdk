@@ -2,7 +2,7 @@
 
 **Note**: _This is not a Lightspeed official package._
 
-[![npm version](https://badge.fury.io/js/lightspeed-sdk.svg)](https://badge.fury.io/js/lightspeed-sdk)
+[![npm version](https://badge.fury.io/js/@craftalley%2Flightspeed-sdk.svg)](https://badge.fury.io/js/@craftalley%2Flightspeed-sdk)
 
 ## Installation
 

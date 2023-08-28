@@ -329,6 +329,23 @@ class LightspeedRetailApi {
     }
   }
 
+  async putSale(sale, ID) {
+    const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/Sale/${ID}.json`;
+
+    const options = {
+      method: 'PUT',
+      url,
+      data: sale,
+    };
+
+    try {
+      const response = await this.performRequest(options);
+      return response.data;
+    } catch (err) {
+      return this.handleResponseError('PUT ITEM', err);
+    }
+  }
+
   async putItem(item, ID) {
     const url = `https://api.lightspeedapp.com/API/${this.version}/Account/${this.accountId}/Item/${ID}.json`;
 
